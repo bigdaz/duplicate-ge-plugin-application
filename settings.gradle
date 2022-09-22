@@ -1,14 +1,17 @@
-pluginManagement {
+buildscript {
     repositories {
         mavenLocal()
         gradlePluginPortal()
+    }
+    dependencies {
+        classpath 'com.gradle.reproducer:enterprise-plugin:0.0.1'
     }
 }
 
 plugins {
     id 'com.gradle.common-custom-user-data-gradle-plugin' version '1.8.1'
-    id 'reproducer.enterprise' version '0.0.1'
 }
+apply plugin: 'reproducer.enterprise'
 
 gradleEnterprise {
 	server = 'https://ge.solutions-team.gradle.com'
