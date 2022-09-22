@@ -1,10 +1,13 @@
 pluginManagement {
-    includeBuild 'build-src'
+    repositories {
+        mavenLocal()
+        gradlePluginPortal()
+    }
 }
 
 plugins {
     id 'com.gradle.common-custom-user-data-gradle-plugin' version '1.8.1'
-    id 'reproducer.enterprise'
+    id 'reproducer.enterprise' version '0.0.1'
 }
 
 gradleEnterprise {
