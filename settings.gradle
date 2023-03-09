@@ -3,15 +3,30 @@ pluginManagement {
 }
 
 plugins {
-    id 'com.gradle.common-custom-user-data-gradle-plugin' version '1.8.1'
+    id 'com.gradle.common-custom-user-data-gradle-plugin' version '1.9'
     id 'reproducer.enterprise'
 }
 
 gradleEnterprise {
-	server = 'https://ge.solutions-team.gradle.com'
-	buildScan {
-		publishAlways()
-	}
+    server = "https://ge.solutions-team.gradle.com"
+    buildScan {
+        capture { taskInputFiles = true }
+        publishAlways()
+        obfuscation {
+            ipAddresses { addresses -> addresses.collect { address -> "0.0.0.0" } }
+        }
+    }
+}
+
+buildCache {
+    local {
+        enabled = true
+    }
+
+    remote(gradleEnterprise.buildCache) {
+        enabled = true
+        // push = true
+    }
 }
 
 def buildscriptClasspath = buildscript.configurations.classpath.incoming.files
