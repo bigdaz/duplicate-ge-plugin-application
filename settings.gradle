@@ -29,6 +29,13 @@ buildCache {
     }
 }
 
+println()
+if (settings.gradle.startParameter.isBuildScan()) {
+    println "Gradle invocation DID include --scan"
+} else {
+    println "Gradle invocation DID NOT include --scan"
+}
+
 def buildscriptClasspath = buildscript.configurations.classpath.incoming.files
 
 def geJar = buildscriptClasspath.find { it.name.startsWith('gradle-enterprise-gradle-plugin') }
