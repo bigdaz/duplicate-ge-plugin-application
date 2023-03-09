@@ -1,1 +1,22 @@
-task noop
+plugins {
+    id("base")
+}
+
+task cacheableTask {
+    def inputFile = file("src/dummy-input.txt")
+    def outputDir = file(layout.buildDirectory.dir("dummy-output"))
+
+    outputs.cacheIf { true }
+
+    inputs.files(inputFile)
+        .withPropertyName("dummy-input")
+        .withPathSensitivity(PathSensitivity.RELATIVE)
+
+    outputs.dir(outputDir)
+        .withPropertyName('dummy-output')
+
+    doLast {
+        println "EXECUTING cacheableTask: result not coming from cache"
+        file("${outputDir}/result.txt").text = "RESULT\n" + inputFile.text
+    }
+}
